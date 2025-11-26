@@ -150,6 +150,12 @@ public class Zoo {
           }
           return null;
      }
+     
+     /**
+      * 
+      * @param location
+      * @return filtered ArrayList containing the animals from the given location (continent)
+      */
      public ArrayList<Animal> filter(Location location) {
           ArrayList<Animal> filtered = new ArrayList<Animal>(); 
           for (Animal a : animals) {
@@ -158,5 +164,9 @@ public class Zoo {
                }
           }
           return filtered;
+     }
+     
+     public ArrayList<Animal> getAnimals(){
+    	 return animals;
      }
 }

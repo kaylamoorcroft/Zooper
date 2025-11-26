@@ -12,27 +12,20 @@ public class Person{
 	public void contDisplay(Zoo zoo) {
 		while (0 != 1) {
 			int restart = 0;
-			String target = "";
-			System.out.print("Enter the continent of animals you would like to see: ");
-			target = sc.next().toUpperCase();
+			int target = 0;
+			System.out.println("\nSelect Continent: ");
+			System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
+					+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
+			target = sc.nextInt();
 			
-			if(target.equals("AFRICA")) {System.out.println(zoo.filter(Location.AFRICA));}
-			else if(target.equals("NORTH AMERICA")) {System.out.println(zoo.filter(Location.NORTH_AMERICA));}
-			else if(target.equals("SOUTH AMERICA")) {System.out.println(zoo.filter(Location.SOUTH_AMERICA));}
-			else if(target.equals("ASIA")) {System.out.println(zoo.filter(Location.ASIA));}
-			else if(target.equals("ANTARCTICA")) {System.out.println(zoo.filter(Location.ANTARCTICA));}
-			else if(target.equals("AUSTRALIA")) {System.out.println(zoo.filter(Location.AUSTRALIA));}
-			else if(target.equals("EUROPE")) {System.out.println(zoo.filter(Location.EUROPE));}
-			else if(target.equals("UNKNOWN")) {System.out.println(zoo.filter(Location.UNKNOWN));}
-			else {
-				System.out.println("Invalid continent entered");
+			for(Animal a : zoo.filter(Utils.intToLocation(target))) {
+				System.out.println(a);
 			}
 			
 			System.out.println("Enter 1 to search again. Enter 2 to return to main menu");
 			restart = sc.nextInt();
 			
 			if(restart != 1) {
-				System.out.println();
 				break;
 			}
 		}
@@ -43,15 +36,62 @@ public class Person{
 	 * @param zoo
 	 */
 	public void updateAnimal(Zoo zoo) {
-		String name = "";
-		String species = "";
+		int choice = 0;
+		int subChoice = 0;
+		int count = 1; 
 		
-		System.out.print("Enter the name of the animal you wish to update: ");
-		name = sc.next();
-		System.out.print("Enter the species of the animal you wish to update: ");
-		species = sc.next();
+		System.out.println("Enter the number ID of the animal you wish to update");
 		
-		zoo.search(name, species);
+		for (Animal a : zoo.getAnimals()) {
+			System.out.println(count + ".) " + a.getName() + " the " + a.getSpecies());
+			count++;
+		}
+		
+		choice = sc.nextInt();
+		
+		if(choice - 1 >= 0 && choice - 1 <= zoo.getAnimals().size()) {
+			System.out.println("\nSelect attribute to change");
+			System.out.println("1.) Name: " + zoo.getAnimals().get(choice - 1).getName());
+			System.out.println("2.) Age: " + zoo.getAnimals().get(choice - 1).getAge());
+			System.out.println("3.) Location: " + zoo.getAnimals().get(choice - 1).getLocation());
+			
+			subChoice = sc.nextInt();
+			
+			if (subChoice == 1) {
+				String newName = "";
+				System.out.print("\nEnter updated name: ");
+				newName = sc.next();
+				
+				zoo.getAnimals().get(choice - 1).setName(newName);
+			}
+			
+			else if (subChoice == 2) {
+				int newAge = 0;
+				System.out.print("\nEnter age: ");
+				newAge = sc.nextInt();
+				
+				zoo.getAnimals().get(choice - 1).setAge(newAge);
+			}
+			
+			else if (subChoice == 3) {
+				int continentChoice = 0;
+				System.out.println("\nSelect Continent: ");
+				System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
+						+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
+				continentChoice = sc.nextInt();
+					
+				zoo.getAnimals().get(choice - 1).setLocation(Utils.intToLocation(continentChoice));
+			}
+			
+			else {
+				System.out.println("Invalid Entry\n");
+			}
+		}
+		else {
+			System.out.println("Invalid Entry\n");
+		}
+		
+		System.out.println();
 	}
 	
 	/**
@@ -61,7 +101,7 @@ public class Person{
 	public void addAnimal(Zoo zoo) {
 		String species = "";
 		String name = "";
-		String continentStr = "";
+		int continentChoice = 0;
 		Location continent = Location.UNKNOWN;
 		int age = 0;
 		int infoSelection = 0;
@@ -118,15 +158,17 @@ public class Person{
 		
 		if(infoSelection == 3) {
 			while (6 != 7) {
-				System.out.print("Enter Continent: ");
-				continentStr = sc.next().toUpperCase();
+				System.out.println("Select Continent: ");
+				System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
+						+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
+				continentChoice = sc.nextInt();
 					
-				System.out.println("You entered " + continentStr
+				System.out.println("You entered " + Utils.intToLocation(continentChoice)
 						+ ". Is this correct (1) or incorrect (2)?");
 				confirmation = sc.nextInt();
 					
 				if(confirmation == 1) {
-					continent = Utils.stringToLocation(continentStr);
+					continent = Utils.intToLocation(continentChoice);
 					break;
 				}
 			}
@@ -134,4 +176,26 @@ public class Person{
 			
 		zoo.addAnimal(name, species, age, continent);
 	}
+
+	/**
+	 * Gives user menu of all current animals and deletes one based on input
+	 * using zoo removeAnimal function
+	 * @param zoo
+	 */
+	public void deleteAnimal(Zoo zoo) {
+		int choice = 0;
+		int count = 1; 
+		
+		System.out.println("Enter the number ID of the animal you wish to remove");
+		
+		for (Animal a : zoo.getAnimals()) {
+			System.out.println(count + ".) " + a.getName() + " the " + a.getSpecies());
+			count++;
+		}
+		
+		choice = sc.nextInt();
+		
+		zoo.removeAnimal(zoo.getAnimals().get(choice - 1).getName(), zoo.getAnimals().get(choice - 1).getSpecies());
+	}
+
 }
