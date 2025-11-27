@@ -130,7 +130,7 @@ public class Zoo {
       */
      private int getIndex(String name, String species) {
           for (int i = 0; i < animals.size(); i++) {
-               if (name.equals(animals.get(i).getName()) && species.equals(animals.get(i).getSpecies())) {
+               if (name.equalsIgnoreCase(animals.get(i).getName()) && species.equalsIgnoreCase(animals.get(i).getSpecies())) {
                     return i;
                }
           }
@@ -144,7 +144,7 @@ public class Zoo {
       */
      public Animal search(String name, String species) {
           for (Animal a : animals) {
-               if (name.equals(a.getName()) && species.equals(a.getSpecies())) {
+               if (name.equalsIgnoreCase(a.getName()) && species.equalsIgnoreCase(a.getSpecies())) {
                     return a;
                }
           }

@@ -1,24 +1,42 @@
 import java.util.Scanner;
 
-public class Person{
+public class ZooManager{
 	Scanner sc = new Scanner(System.in);
+	Zoo zoo;
 	
-	public Person() {}
+	public ZooManager() {
+		// either import from file or create new
+		zoo = new Zoo();
+        zoo.addAnimal("George", "Monkey",5);
+        zoo.addAnimal("Elly", "Elephant",5,Location.AFRICA);
+        zoo.addAnimal("Leo","Lion",10,Location.AFRICA);
+        zoo.addAnimal("Rattlesnake");
+	}
 	
+	public void search() {
+		String name = "";
+		String species = "";
+		
+		System.out.print("\nEnter the name of the animal: ");
+		name = sc.next();
+		System.out.print("Enter the species of the animal: ");
+		species = sc.next();
+		
+		System.out.print("\n" + zoo.search(name, species));
+	}
 	/**
 	 * Display all animals from given continent
-	 * @param zoo
 	 */
-	public void contDisplay(Zoo zoo) {
-		while (0 != 1) {
+	public void contDisplay() {
+		while (true) {
 			int restart = 0;
-			int target = 0;
+			int continent = 0;
 			System.out.println("\nSelect Continent: ");
 			System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
 					+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
-			target = sc.nextInt();
+			continent = sc.nextInt();
 			
-			for(Animal a : zoo.filter(Utils.intToLocation(target))) {
+			for(Animal a : zoo.filter(Utils.intToLocation(continent))) {
 				System.out.println(a);
 			}
 			
@@ -30,12 +48,13 @@ public class Person{
 			}
 		}
 	}
-	
+	public void displaySummary() {
+		zoo.displaySummary();
+	}
 	/**
 	 * Update animal information (will finish when search operational
-	 * @param zoo
 	 */
-	public void updateAnimal(Zoo zoo) {
+	public void updateAnimal() {
 		int choice = 0;
 		int subChoice = 0;
 		int count = 1; 
@@ -94,11 +113,7 @@ public class Person{
 		System.out.println();
 	}
 	
-	/**
-	 * Add animal to given zoo using zoo addAnimal function
-	 * @param zoo
-	 */
-	public void addAnimal(Zoo zoo) {
+	public void addAnimal() {
 		String species = "";
 		String name = "";
 		int continentChoice = 0;
@@ -180,9 +195,8 @@ public class Person{
 	/**
 	 * Gives user menu of all current animals and deletes one based on input
 	 * using zoo removeAnimal function
-	 * @param zoo
 	 */
-	public void deleteAnimal(Zoo zoo) {
+	public void deleteAnimal() {
 		int choice = 0;
 		int count = 1; 
 		
@@ -197,5 +211,4 @@ public class Person{
 		
 		zoo.removeAnimal(zoo.getAnimals().get(choice - 1).getName(), zoo.getAnimals().get(choice - 1).getSpecies());
 	}
-
 }
