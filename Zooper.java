@@ -97,7 +97,8 @@ public class Zooper {
                     if (!displayMenu()) break; // if not display menu due to incorrect password, exit to main menu
                 }
                 catch (java.lang.IllegalArgumentException e) {
-                    System.out.println("Have a good day!");
+                    zoo.writeToFile(); // save changed data before exit
+                    System.out.println("\nHave a good day!");
                     sc.close();
                     System.exit(0);
                 }

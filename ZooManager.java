@@ -1,16 +1,66 @@
 import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class ZooManager{
 	Scanner sc = new Scanner(System.in);
 	Zoo zoo;
+	String filename = "data.txt";
 	
 	public ZooManager() {
-		// either import from file or create new
+		// read existing data from file
 		zoo = new Zoo();
-        zoo.addAnimal("George", "Monkey",5);
-        zoo.addAnimal("Elly", "Elephant",5,Location.AFRICA);
-        zoo.addAnimal("Leo","Lion",10,Location.AFRICA);
-        zoo.addAnimal("Rattlesnake");
+		readFromFile();
+	}
+
+	public void writeToFile() {
+        try {
+            FileWriter writer = new FileWriter(filename);
+			for (Animal a : zoo.getAnimals()) {
+				writer.write(a.getRecord() + "\n");
+			}
+            writer.close();
+            System.out.println("Saved new zoo state");
+        }
+
+        // Exception Thrown
+        catch (IOException e) {
+            System.out.println("An error has occurred.");
+            e.printStackTrace();
+        }
+	}
+
+	private void readFromFile() {
+        try {
+            File file = new File(filename);
+            Scanner reader = new Scanner(file);
+          
+            // Traversing File Data
+          	while (reader.hasNextLine()) {
+                String data = reader.nextLine();
+                String[] attributes = data.split(","); // Splits by comma
+				int age = 0, locationInt = 8;
+				try {
+					age = Integer.parseInt(attributes[2]);
+					locationInt = Integer.parseInt(attributes[3]);
+				} catch (NumberFormatException e) {
+					System.out.println("Cannot complete import from file...");
+					reader.close();
+					return;
+				}
+				zoo.addAnimal(attributes[0],attributes[1],age,Location.getLocation(locationInt));
+            }
+          
+            reader.close();
+        }
+        
+        // Exception Cases
+        catch (FileNotFoundException e) {
+            System.out.println("An error has occurred.");
+            e.printStackTrace();
+        }
 	}
 	
 	public void search() {
@@ -36,7 +86,7 @@ public class ZooManager{
 					+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
 			continent = sc.nextInt();
 			
-			for(Animal a : zoo.filter(Utils.intToLocation(continent))) {
+			for(Animal a : zoo.filter(Location.getLocation(continent))) {
 				System.out.println(a);
 			}
 			
@@ -99,7 +149,7 @@ public class ZooManager{
 						+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
 				continentChoice = sc.nextInt();
 					
-				zoo.getAnimals().get(choice - 1).setLocation(Utils.intToLocation(continentChoice));
+				zoo.getAnimals().get(choice - 1).setLocation(Location.getLocation(continentChoice));
 			}
 			
 			else {
@@ -178,12 +228,12 @@ public class ZooManager{
 						+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
 				continentChoice = sc.nextInt();
 					
-				System.out.println("You entered " + Utils.intToLocation(continentChoice)
+				System.out.println("You entered " + Location.getLocation(continentChoice)
 						+ ". Is this correct (1) or incorrect (2)?");
 				confirmation = sc.nextInt();
 					
 				if(confirmation == 1) {
-					continent = Utils.intToLocation(continentChoice);
+					continent = Location.getLocation(continentChoice);
 					break;
 				}
 			}

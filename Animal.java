@@ -56,7 +56,10 @@ public class Animal {
         String toReturn = "Name: " + name + "\n";
         toReturn += "Species: " + species + "\n";
         toReturn += "Age: " + age + "\n";
-        toReturn += "Location: " + Utils.tagToString(location.name()) + "\n";
+        toReturn += "Location: " + location + "\n";
         return toReturn;
+    }
+    public String getRecord() {
+        return name + "," + species + "," + age + "," + location.getLocationNumber();
     }
 }
