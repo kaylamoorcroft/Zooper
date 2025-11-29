@@ -1,5 +1,7 @@
 George,Monkey,5,8
 Elly,Elephant,5,1
 Leo,Lion,10,1
-,Rattlesnake,0,8
+Rara,Rattlesnake,0,8
 kanga,kangaroo,5,5
+penny,penguin,3,7
+Pooh,Bear,4,2

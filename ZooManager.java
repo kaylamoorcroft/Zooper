@@ -82,8 +82,11 @@ public class ZooManager{
 			int restart = 0;
 			int continent = 0;
 			System.out.println("\nSelect Continent: ");
-			System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
-					+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
+			// System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
+			// 		+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
+			for (Location loc : Location.values()) {
+				System.out.println(loc.getLocationNumber() + ".) " + loc);
+			}
 			continent = sc.nextInt();
 			
 			for(Animal a : zoo.filter(Location.getLocation(continent))) {
@@ -145,8 +148,9 @@ public class ZooManager{
 			else if (subChoice == 3) {
 				int continentChoice = 0;
 				System.out.println("\nSelect Continent: ");
-				System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
-						+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
+				for (Location loc : Location.values()) {
+					System.out.println(loc.getLocationNumber() + ".) " + loc);
+				}
 				continentChoice = sc.nextInt();
 					
 				zoo.getAnimals().get(choice - 1).setLocation(Location.getLocation(continentChoice));
@@ -224,8 +228,9 @@ public class ZooManager{
 		if(infoSelection == 3) {
 			while (6 != 7) {
 				System.out.println("Select Continent: ");
-				System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
-						+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
+				for (Location loc : Location.values()) {
+					System.out.println(loc.getLocationNumber() + ".) " + loc);
+				}
 				continentChoice = sc.nextInt();
 					
 				System.out.println("You entered " + Location.getLocation(continentChoice)
