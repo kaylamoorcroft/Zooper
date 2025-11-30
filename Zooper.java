@@ -68,15 +68,12 @@ public class Zooper {
                 zoo.displaySummary();
                 break;
             case UPDATE:
-                System.out.println("Updating if zookeeper / admin...");
                 zoo.updateAnimal();
                 break;
             case REMOVE:
-                System.out.println("Removing if admin...");
                 zoo.deleteAnimal();
                 break;
             case ADD:
-                System.out.println("Adding if admin...");
                 zoo.addAnimal();
                 break;
         }

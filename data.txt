@@ -1,4 +1,4 @@
-George,Monkey,5,8
+George,Monkey,6,1
 Elly,Elephant,5,1
 Leo,Lion,10,1
 Rara,Rattlesnake,0,8

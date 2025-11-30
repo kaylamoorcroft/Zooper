@@ -50,67 +50,34 @@ public class Zoo {
      }
 
      /**
-      * Update animal name, location and age by name and species
-      * @param name - animal's given name (eg. "Fred")
-      * @param species - general animal name (eg. "spider monkey")
-      * @param age - how old the animal is in years
-      * @param location - continent area in the zoo
-      * @param newName - the new given name for the animal
-      * @return the updated animal
+      * Update animal name based on index
+      * @return Updated animal
       */
-     public Animal updateAnimal(String name, String species, int age, Location location, String newName) {
-          int index = getIndex(name, species);
-          animals.get(index).setName(newName);
-          animals.get(index).setLocation(location);
+     public Animal updateAnimalName(int index, String name) {
+          animals.get(index).setName(name);
+          return animals.get(index);
+     }
+     /**
+      * Update animal age based on index
+      * @return Updated animal
+      */
+     public Animal updateAnimalAge(int index, int age) {
           animals.get(index).setAge(age);
           return animals.get(index);
      }
      /**
-      * Update animal location and age by name and species
-      * @param name - animal's given name (eg. "Fred")
-      * @param species - general animal name (eg. "spider monkey")
-      * @param age - how old the animal is in years
-      * @param location - continent area in the zoo
-      * @return the updated animal
+      * Update animal location based on index
+      * @return Updated animal
       */
-     public Animal updateAnimal(String name, String species, int age, Location location) {
-          int index = getIndex(name, species);
-          animals.get(index).setLocation(location);
-          animals.get(index).setAge(age);
-          return animals.get(index);
-     }
-     /**
-      * Update animal location by name and species
-      * @param name - animal's given name (eg. "Fred")
-      * @param species - general animal name (eg. "spider monkey")
-      * @param location - continent area in the zoo
-      * @return the updated animal
-      */
-     public Animal updateAnimal(String name, String species, Location location) {
-          int index = getIndex(name, species);
+     public Animal updateAnimalLocation(int index, Location location) {
           animals.get(index).setLocation(location);
           return animals.get(index);
      }
      /**
-      * Update animal age by name and species
-      * @param name - animal's given name (eg. "Fred")
-      * @param species - general animal name (eg. "spider monkey")
-      * @param age - how old the animal is in years
+      * Increase animal age by 1, given the index
       * @return the updated animal
       */
-     public Animal updateAnimal(String name, String species, int age) {
-          int index = getIndex(name, species);
-          animals.get(index).setAge(age);
-          return animals.get(index);
-     }
-     /**
-      * Increase animal age by 1, given name and species of animal
-      * @param name - animal's given name (eg. "Fred")
-      * @param species - general animal name (eg. "spider monkey")
-      * @return the updated animal
-      */
-     public Animal ageUpAnimal(String name, String species) {
-          int index = getIndex(name, species);
+     public Animal ageUpAnimal(int index) {
           int currentAge = animals.get(index).getAge();
           animals.get(index).setAge(currentAge + 1);
           return animals.get(index);
@@ -120,21 +87,6 @@ public class Zoo {
           for (Animal a : animals) {
                System.out.println(a);
           }
-     }
-
-     /**
-      * Private search function for local use
-      * @param name - animal's given name (eg. "Fred")
-      * @param species - general animal name (eg. "spider monkey")
-      * @return the index of the animal with both name and species
-      */
-     private int getIndex(String name, String species) {
-          for (int i = 0; i < animals.size(); i++) {
-               if (name.equalsIgnoreCase(animals.get(i).getName()) && species.equalsIgnoreCase(animals.get(i).getSpecies())) {
-                    return i;
-               }
-          }
-          return -1;
      }
      /**
       * Search animal by name and species

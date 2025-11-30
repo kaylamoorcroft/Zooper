@@ -78,8 +78,8 @@ public class ZooManager{
 	 * Display all animals from given continent
 	 */
 	public void contDisplay() {
-		while (true) {
-			int restart = 0;
+		int restart = 0;
+		do {
 			int continent = 0;
 			System.out.println("\nSelect Continent: ");
 			for (Location loc : Location.values()) {
@@ -93,11 +93,8 @@ public class ZooManager{
 			
 			System.out.println("Enter 1 to search again. Enter 2 to return to main menu");
 			restart = sc.nextInt();
-			
-			if(restart != 1) {
-				break;
-			}
-		}
+
+		} while(restart == 1);
 	}
 	public void displaySummary() {
 		zoo.displaySummary();
@@ -106,8 +103,8 @@ public class ZooManager{
 	 * Update animal information (will finish when search operational
 	 */
 	public void updateAnimal() {
+		int index = 0;
 		int choice = 0;
-		int subChoice = 0;
 		int count = 1; 
 		
 		System.out.println("Enter the number ID of the animal you wish to update");
@@ -117,33 +114,36 @@ public class ZooManager{
 			count++;
 		}
 		
-		choice = sc.nextInt();
+		index = sc.nextInt() - 1;
+		if (index < 0 || index > zoo.getAnimals().size() - 1) {
+			System.out.println("Invalid selection...\n\n");
+			return;
+		}
 		
-		if(choice - 1 >= 0 && choice - 1 <= zoo.getAnimals().size()) {
-			System.out.println("\nSelect attribute to change");
-			System.out.println("1.) Name: " + zoo.getAnimals().get(choice - 1).getName());
-			System.out.println("2.) Age: " + zoo.getAnimals().get(choice - 1).getAge());
-			System.out.println("3.) Location: " + zoo.getAnimals().get(choice - 1).getLocation());
-			
-			subChoice = sc.nextInt();
-			
-			if (subChoice == 1) {
+		System.out.println("\nSelect attribute to change");
+		System.out.println("1.) Name: " + zoo.getAnimals().get(index).getName());
+		System.out.println("2.) Age: " + zoo.getAnimals().get(index).getAge());
+		System.out.println("3.) Location: " + zoo.getAnimals().get(index).getLocation());
+		System.out.println("or... select 4.) to age animal up");
+		
+		choice = sc.nextInt();
+
+		switch(choice) {
+			case 1:
 				String newName = "";
 				System.out.print("\nEnter updated name: ");
 				newName = sc.next();
 				
-				zoo.getAnimals().get(choice - 1).setName(newName);
-			}
-			
-			else if (subChoice == 2) {
+				zoo.updateAnimalName(index, newName);
+				break;
+			case 2:
 				int newAge = 0;
 				System.out.print("\nEnter age: ");
 				newAge = sc.nextInt();
 				
-				zoo.getAnimals().get(choice - 1).setAge(newAge);
-			}
-			
-			else if (subChoice == 3) {
+				zoo.updateAnimalAge(index, newAge);
+				break;
+			case 3:
 				int continentChoice = 0;
 				System.out.println("\nSelect Continent: ");
 				for (Location loc : Location.values()) {
@@ -151,17 +151,14 @@ public class ZooManager{
 				}
 				continentChoice = sc.nextInt();
 					
-				zoo.getAnimals().get(choice - 1).setLocation(Location.getLocation(continentChoice));
-			}
-			
-			else {
+				zoo.updateAnimalLocation(index, Location.getLocation(continentChoice));
+				break;
+			case 4:
+				zoo.ageUpAnimal(index);
+				break;
+			default:
 				System.out.println("Invalid Entry\n");
-			}
 		}
-		else {
-			System.out.println("Invalid Entry\n");
-		}
-		
 		System.out.println();
 	}
 	
@@ -226,7 +223,7 @@ public class ZooManager{
 	 * using zoo removeAnimal function
 	 */
 	public void deleteAnimal() {
-		int choice = 0;
+		int index = 0;
 		int count = 1; 
 		
 		System.out.println("Enter the number ID of the animal you wish to remove");
@@ -236,8 +233,8 @@ public class ZooManager{
 			count++;
 		}
 		
-		choice = sc.nextInt();
+		index = sc.nextInt() - 1;
 		
-		zoo.removeAnimal(zoo.getAnimals().get(choice - 1).getName(), zoo.getAnimals().get(choice - 1).getSpecies());
+		zoo.removeAnimal(zoo.getAnimals().get(index).getName(), zoo.getAnimals().get(index).getSpecies());
 	}
 }
