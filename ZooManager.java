@@ -82,8 +82,6 @@ public class ZooManager{
 			int restart = 0;
 			int continent = 0;
 			System.out.println("\nSelect Continent: ");
-			// System.out.println("1.) Africa\n2.) Antarctica\n3.) Asia\n4.) Australia"
-			// 		+ "\n5.) Europe\n6.) North America\n7.) South America\n8.) Unknown");
 			for (Location loc : Location.values()) {
 				System.out.println(loc.getLocationNumber() + ".) " + loc);
 			}
@@ -182,68 +180,44 @@ public class ZooManager{
 				+ "3.) Species, name, age, and continent known");
 		infoSelection = sc.nextInt();
 		
-		while(3 != 0) {
-			confirmation = 0;
-			System.out.print("Enter Species: ");
-			species = sc.next();
-			
-			System.out.println("You entered " + species
-					+ ". Is this correct (1) or incorrect (2)?");
-			confirmation = sc.nextInt();
-			
-			if(confirmation == 1) {
-				break;
-			}
-		}
-		
-		if(infoSelection == 2 || infoSelection == 3) {
-			while(3 != 0) {
-				confirmation = 0;
-				System.out.print("Enter Name: ");
-				name = sc.next();
-				
-				System.out.println("You entered " + name
-						+ ". Is this correct (1) or incorrect (2)?");
-				confirmation = sc.nextInt();
-				
-				if(confirmation == 1) {
-					break;
-				}
-			}	
-			while(3 != 0) {
-				confirmation = 0;
-				System.out.print("Enter Age: ");
-				age = sc.nextInt();
-				
-				System.out.println("You entered " + age
-						+ ". Is this correct (1) or incorrect (2)?");
-				confirmation = sc.nextInt();
-				
-				if(confirmation == 1) {
-					break;
-				}
-			}
-		}
-		
-		if(infoSelection == 3) {
-			while (6 != 7) {
+		switch(infoSelection) {
+			case 3:
 				System.out.println("Select Continent: ");
 				for (Location loc : Location.values()) {
 					System.out.println(loc.getLocationNumber() + ".) " + loc);
 				}
 				continentChoice = sc.nextInt();
-					
-				System.out.println("You entered " + Location.getLocation(continentChoice)
-						+ ". Is this correct (1) or incorrect (2)?");
-				confirmation = sc.nextInt();
-					
-				if(confirmation == 1) {
-					continent = Location.getLocation(continentChoice);
-					break;
-				}
-			}
+				boolean retry = false;
+				do {
+					try {
+						continent = Location.getLocation(continentChoice);
+						retry = false;
+					}
+					catch (IllegalArgumentException e) {
+						System.out.println("Invalid input... please try again.");
+						retry = true;
+					}
+				} while (retry);
+			case 2:
+				System.out.print("Enter Name: ");
+				name = sc.next();
+
+				System.out.print("Enter Age: ");
+				age = sc.nextInt();
+			case 1:
+				System.out.print("Enter Species: ");
+				species = sc.next();
+				break;
+			default:
+				System.out.println("Invalid input...");
 		}
-			
+		
+		System.out.println("Confirm (1) or reenter info (2)?");
+		confirmation = sc.nextInt();
+		if (confirmation == 2) { // redo
+			addAnimal();
+			return;
+		}
 		zoo.addAnimal(name, species, age, continent);
 	}
 

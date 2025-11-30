@@ -5,3 +5,4 @@ Rara,Rattlesnake,0,8
 kanga,kangaroo,5,5
 penny,penguin,3,7
 Pooh,Bear,4,2
+lulu,llama,7,6
