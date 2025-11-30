@@ -34,19 +34,31 @@ public class Zoo {
      * @param age - how old the animal is in years
      * @param location - continent area in the zoo
      */
-     public void addAnimal(String name, String species, int age, Location location) {
+     public boolean addAnimal(String name, String species, int age, Location location) {
+          if (!isUniqueName(name, species)) return false;
           animals.add(new Animal(name, species, age, location));
+          return true;
+     }
+     /**
+      * @return true if there is not already an animal of species with name
+      */
+     public boolean isUniqueName(String name, String species) {
+          Animal existingAnimal = null;
+          for (Animal a : animals) {
+               if (a.getName().equalsIgnoreCase(name) && a.getSpecies().equalsIgnoreCase(species)) {
+                    existingAnimal = a;
+                    break; // Exit loop once found
+               }
+          }
+          return (existingAnimal == null);
      }
 
      /**
-      * Remove animal by name and species
-      * @param name - animal's given name (eg. "Fred")
-      * @param species - general animal name (eg. "spider monkey")
-      * @return true if successfully removed
+      * Remove animal by index
+      * @return removed animal
       */
-     public boolean removeAnimal (String name, String species) {
-          Animal animal = search(name, species);
-          return animals.remove(animal);
+     public Animal removeAnimal(int index) {
+          return animals.remove(index);
      }
 
      /**
@@ -54,6 +66,7 @@ public class Zoo {
       * @return Updated animal
       */
      public Animal updateAnimalName(int index, String name) {
+          if (!isUniqueName(name, animals.get(index).getSpecies())) return null;
           animals.get(index).setName(name);
           return animals.get(index);
      }

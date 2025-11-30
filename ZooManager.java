@@ -134,7 +134,12 @@ public class ZooManager{
 				System.out.print("\nEnter updated name: ");
 				newName = sc.next();
 				
-				zoo.updateAnimalName(index, newName);
+				if (zoo.updateAnimalName(index, newName) == null) {
+					System.out.println("\nUnable to update... There is already a(n) " + zoo.getAnimals().get(index).getSpecies() + " with name " + newName);
+				}
+				else {
+					System.out.println("\nSuccessfully updated animal name");
+				}
 				break;
 			case 2:
 				int newAge = 0;
@@ -142,6 +147,7 @@ public class ZooManager{
 				newAge = sc.nextInt();
 				
 				zoo.updateAnimalAge(index, newAge);
+				System.out.println("\nSuccessfully updated animal age");
 				break;
 			case 3:
 				int continentChoice = 0;
@@ -151,10 +157,17 @@ public class ZooManager{
 				}
 				continentChoice = sc.nextInt();
 					
-				zoo.updateAnimalLocation(index, Location.getLocation(continentChoice));
+				try{ 
+					zoo.updateAnimalLocation(index, Location.getLocation(continentChoice));
+					System.out.println("\nSuccessfully updated animal location");
+				}
+				catch(IllegalArgumentException e) {
+					System.out.println("Invalid input...\n");
+				}
 				break;
 			case 4:
 				zoo.ageUpAnimal(index);
+				System.out.println("\nSuccessfully updated animal age");
 				break;
 			default:
 				System.out.println("Invalid Entry\n");
@@ -215,7 +228,12 @@ public class ZooManager{
 			addAnimal();
 			return;
 		}
-		zoo.addAnimal(name, species, age, continent);
+		if (!zoo.addAnimal(name, species, age, continent)) {
+			System.out.println("Unable to add new animal... there is already a(n) " + species + " with name " + name);
+		}
+		else {
+			System.out.println("\nSuccessfully added new animal\n");
+		}
 	}
 
 	/**
@@ -234,7 +252,12 @@ public class ZooManager{
 		}
 		
 		index = sc.nextInt() - 1;
-		
-		zoo.removeAnimal(zoo.getAnimals().get(index).getName(), zoo.getAnimals().get(index).getSpecies());
+		Animal removedAnimal = zoo.removeAnimal(index);
+		if(removedAnimal == null) {
+			System.out.println("\nError removing animal");
+		}
+		else {
+			System.out.println("\nSuccessfully removed " + removedAnimal.getName() + " the " + removedAnimal.getSpecies());
+		}
 	}
 }
