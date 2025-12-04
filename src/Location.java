@@ -1,3 +1,4 @@
+package src;
 public enum Location {
     AFRICA(1), NORTH_AMERICA(2), SOUTH_AMERICA(3), ASIA(4), AUSTRALIA(5), EUROPE(6), ANTARCTICA(7), UNKNOWN(8);
     private final int locationNumber; 

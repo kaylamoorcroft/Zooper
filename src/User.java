@@ -1,3 +1,4 @@
+package src;
 public enum User {
     VISITOR(1), ZOOKEEPER(2), ADMIN(3);
 

@@ -1,3 +1,4 @@
+package src;
 public enum MenuOption {
     SEARCH(1), FILTER(2), DISPLAY(3), UPDATE(4), REMOVE(5), ADD(6);
 

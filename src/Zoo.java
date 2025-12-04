@@ -1,3 +1,4 @@
+package src;
 import java.util.ArrayList;
 
 public class Zoo {
@@ -10,22 +11,6 @@ public class Zoo {
      /** Copy over an existing zoo */
      public Zoo(ArrayList<Animal> animals) {
          this.animals = animals; 
-     }
-     /**
-     * Add a new animal to the zoo when only the species is known
-     * @param species
-     */
-     public void addAnimal(String species) {
-          animals.add(new Animal(species));
-     }
-     /**
-     * Add a new animal to the zoo with an unknown location
-     * @param name - given name (eg. "Fred")
-     * @param species - general animal name (eg. "spider monkey")
-     * @param age - how old the animal is in years
-     */
-     public void addAnimal(String name, String species, int age) {
-          animals.add(new Animal(name, species, age));
      }
      /**
      * Add a new animal to the zoo with all the information
@@ -42,7 +27,7 @@ public class Zoo {
      /**
       * @return true if there is not already an animal of species with name
       */
-     public boolean isUniqueName(String name, String species) {
+     private boolean isUniqueName(String name, String species) {
           Animal existingAnimal = null;
           for (Animal a : animals) {
                if (a.getName().equalsIgnoreCase(name) && a.getSpecies().equalsIgnoreCase(species)) {
@@ -58,6 +43,8 @@ public class Zoo {
       * @return removed animal
       */
      public Animal removeAnimal(int index) {
+          if (index < 0 || index >= animals.size())
+               return null;
           return animals.remove(index);
      }
 
@@ -66,7 +53,10 @@ public class Zoo {
       * @return Updated animal
       */
      public Animal updateAnimalName(int index, String name) {
-          if (!isUniqueName(name, animals.get(index).getSpecies())) return null;
+          if (index < 0 || index >= animals.size()) 
+               return null;
+          if (!isUniqueName(name, animals.get(index).getSpecies())) 
+               return null;
           animals.get(index).setName(name);
           return animals.get(index);
      }
@@ -75,6 +65,8 @@ public class Zoo {
       * @return Updated animal
       */
      public Animal updateAnimalAge(int index, int age) {
+          if (index < 0 || index >= animals.size())
+               return null;
           animals.get(index).setAge(age);
           return animals.get(index);
      }
@@ -83,6 +75,8 @@ public class Zoo {
       * @return Updated animal
       */
      public Animal updateAnimalLocation(int index, Location location) {
+          if (index < 0 || index >= animals.size())
+               return null;
           animals.get(index).setLocation(location);
           return animals.get(index);
      }
@@ -91,6 +85,8 @@ public class Zoo {
       * @return the updated animal
       */
      public Animal ageUpAnimal(int index) {
+          if (index < 0 || index >= animals.size())
+               return null;
           int currentAge = animals.get(index).getAge();
           animals.get(index).setAge(currentAge + 1);
           return animals.get(index);
@@ -132,6 +128,10 @@ public class Zoo {
      }
      
      public ArrayList<Animal> getAnimals(){
-    	 return animals;
+    	     return animals;
+     }
+
+     public Animal getAnimal(int index){
+    	     return animals.get(index);
      }
 }

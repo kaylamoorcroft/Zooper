@@ -1,3 +1,4 @@
+package src;
 public abstract class Utils {
     public static String toTitleCase(String str) {
         return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();

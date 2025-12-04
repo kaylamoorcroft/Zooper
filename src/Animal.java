@@ -1,3 +1,7 @@
+package src;
+
+import java.util.Objects;
+
 /**
  * Animal in the Zoo
  */
@@ -51,6 +55,25 @@ public class Animal {
     public void setName(String name) {this.name = name; }
     public void setAge(int age) { this.age = age; }
     public void setLocation(Location location) { this.location = location; }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if(this == obj)
+            return true;
+
+        if(obj == null || obj.getClass()!= this.getClass())
+            return false;
+        
+        Animal a = (Animal) obj;
+        
+        return (a.name == this.name && a.species == this.species && a.age == this.age && a.location == this.location);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, species);
+    }
 
     public String toString() {
         String toReturn = "Name: " + name + "\n";
