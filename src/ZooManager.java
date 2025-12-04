@@ -8,7 +8,7 @@ import java.io.IOException;
 public class ZooManager{
 	Scanner sc = new Scanner(System.in);
 	Zoo zoo;
-	String filename = "data.txt";
+	String filename = "src/data.txt";
 	
 	public ZooManager() {
 		// read existing data from file
@@ -59,8 +59,7 @@ public class ZooManager{
         
         // Exception Cases
         catch (FileNotFoundException e) {
-            System.out.println("An error has occurred.");
-            e.printStackTrace();
+            System.out.println("\nFile " + filename + " does not exist... cannot complete import.\n");
         }
 	}
 	
