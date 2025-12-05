@@ -13,7 +13,7 @@ public enum Location {
     }
     // convert Location to String
     public String toString() {
-        return Utils.tagToString(this.name());
+        return tagToString(this.name());
     }
     // convert int to Location
     public static Location getLocation(int intValue) {
@@ -23,5 +23,19 @@ public enum Location {
             }
         }
         throw new IllegalArgumentException("No Location with number " + intValue);
+    }
+
+    // helper functions for string manipulation
+    
+    private String toTitleCase(String str) {
+        return str.substring(0, 1).toUpperCase() + str.substring(1).toLowerCase();
+    }
+    private String tagToString(String tag) {
+        String[] words = tag.split("_");
+        String result = "";
+        for (String w : words) {
+            result += toTitleCase(w) + " ";
+        }
+        return result;
     }
 }
