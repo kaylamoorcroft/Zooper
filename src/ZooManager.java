@@ -1,4 +1,5 @@
 package src;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -6,9 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class ZooManager{
-	Scanner sc = new Scanner(System.in);
-	Zoo zoo;
-	String filename = "src/data.txt";
+	private Scanner sc = new Scanner(System.in);
+	private Zoo zoo;
+	private String filename = "src/data.txt";
 	
 	public ZooManager() {
 		// read existing data from file
@@ -66,28 +67,46 @@ public class ZooManager{
 	public void search() {
 		String name = "";
 		String species = "";
-		
-		System.out.print("\nEnter the name of the animal: ");
-		name = sc.next();
-		System.out.print("Enter the species of the animal: ");
-		species = sc.next();
-		
-		System.out.print("\n" + zoo.search(name, species));
+		int restart = 0;
+
+		do {
+			System.out.print("\nEnter the name of the animal: ");
+			name = sc.next();
+			System.out.print("Enter the species of the animal: ");
+			species = sc.next();
+			
+			Animal result = zoo.search(name, species);
+			if (result == null) {
+				System.out.println("\nAnimal not found, sorry.\n");
+			}
+			else {
+				System.out.println("\n" + result);
+			}
+			System.out.println("Enter 1 to search again. Enter 2 to return to main menu");
+			restart = sc.nextInt();
+
+		} while(restart == 1);
 	}
 	/**
 	 * Display all animals from given continent
 	 */
 	public void contDisplay() {
 		int restart = 0;
+		int continent = 0;
 		do {
-			int continent = 0;
 			System.out.println("\nSelect Continent: ");
 			for (Location loc : Location.values()) {
 				System.out.println(loc.getLocationNumber() + ".) " + loc);
 			}
 			continent = sc.nextInt();
 			
-			for(Animal a : zoo.filter(Location.getLocation(continent))) {
+			// if no animals in continent, display that
+			ArrayList<Animal> filtered = zoo.filter(Location.getLocation(continent));
+			if (filtered.size() == 0) {
+				System.out.println("No animals found...");
+			}
+			// display animals if filtered not empty
+			for(Animal a : filtered) {
 				System.out.println(a);
 			}
 			
@@ -121,9 +140,9 @@ public class ZooManager{
 		}
 		
 		System.out.println("\nSelect attribute to change");
-		System.out.println("1.) Name: " + zoo.getAnimals().get(index).getName());
-		System.out.println("2.) Age: " + zoo.getAnimals().get(index).getAge());
-		System.out.println("3.) Location: " + zoo.getAnimals().get(index).getLocation());
+		System.out.println("1.) Name: " + zoo.getAnimal(index).getName());
+		System.out.println("2.) Age: " + zoo.getAnimal(index).getAge());
+		System.out.println("3.) Location: " + zoo.getAnimal(index).getLocation());
 		System.out.println("or... select 4.) to age animal up");
 		
 		choice = sc.nextInt();

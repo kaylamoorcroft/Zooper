@@ -8,10 +8,6 @@ public class Zoo {
      public Zoo() {
          animals = new ArrayList<Animal>(); 
      }
-     /** Copy over an existing zoo */
-     public Zoo(ArrayList<Animal> animals) {
-         this.animals = animals; 
-     }
      /**
      * Add a new animal to the zoo with all the information
      * @param name - given name (eg. "Fred")
@@ -126,11 +122,11 @@ public class Zoo {
           }
           return filtered;
      }
-     
+     /** Get all animals in the zoo */
      public ArrayList<Animal> getAnimals(){
     	     return animals;
      }
-
+     /** Get animal by index */
      public Animal getAnimal(int index){
     	     return animals.get(index);
      }

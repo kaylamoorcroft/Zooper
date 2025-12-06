@@ -12,28 +12,6 @@ public class Animal {
     private Location location;
 
     /**
-     * Add a new animal to the zoo when only the species is known
-     * @param species
-     */
-    public Animal(String species) {
-        this.species = species;
-        name = "";
-        age = 0;
-        location = Location.UNKNOWN;
-    }
-    /**
-     * Add a new animal to the zoo with an unknown location
-     * @param name - given name (eg. "Fred")
-     * @param species - general animal name (eg. "spider monkey")
-     * @param age - how old the animal is in years
-     */
-    public Animal(String name, String species, int age) {
-        this.name = name;
-        this.species = species;
-        this.age = age;
-        location = Location.UNKNOWN;
-    }
-    /**
      * Add a new animal to the zoo with all the information
      * @param name - given name (eg. "Fred")
      * @param species - general animal name (eg. "spider monkey")
@@ -82,6 +60,7 @@ public class Animal {
         toReturn += "Location: " + location + "\n";
         return toReturn;
     }
+    /** Get string representation of animal with comma separated values */
     public String getRecord() {
         return name + "," + species + "," + age + "," + location.getLocationNumber();
     }
